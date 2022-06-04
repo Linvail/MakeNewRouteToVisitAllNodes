@@ -1,7 +1,6 @@
 This repository contains implementation of a leetcode-like question.
 
-This question asks you to add several edges into a directed graph to enable you
-to travel all node from the given node.
+This question asks you to add several edges into a directed graph to enable you to travel all nodes from the given node.
 
 I saw this question in this Youtube video:
 https://www.youtube.com/watch?v=qz9tKlF431k
@@ -15,8 +14,7 @@ Idea:
    edges to.
  
 Note that you cannot assume that the airports having 0 in-degree are the answer.
-There might be an isolated cycle among airports. They all have 1 in-degree, but
-they are not reachable from outside.
+There might be an isolated cycle among airports. They all have 1 in-degree, but they are not reachable from outside.
 
 Illustration can be found in:
 https://docs.google.com/document/d/11B_7RCB3KZ3d__QyArGtJCdA9lq-CFeYlZHFqppxoYk/edit?usp=sharing
