@@ -1,0 +1,41 @@
+This repository contains implementation of a leetcode-like question.
+
+This question asks you to add several edges into a directed graph to enable you
+to travel all node from the given node.
+
+I saw this question in this Youtube video:
+https://www.youtube.com/watch?v=qz9tKlF431k
+
+
+Idea:
+1. Find strongly connected component (SSC) of this directed graph.    
+2. Treat SSC as a independent node. Build directed graph for it.
+   You will choose an airport as the representative node of a SSC.
+3. Find all SSCs that have 0 in-degree. They are the nodes we need to create
+   edges to.
+ 
+Note that you cannot assume that the airports having 0 in-degree are the answer.
+There might be an isolated cycle among airports. They all have 1 in-degree, but
+they are not reachable from outside.
+
+
+Input:
+airports = {
+"BGI", "CDG", "DEL", "DOH", "DSM", "EWR", "EYW", "HND", "ICN",
+"JFK", "LGA", "LHR", "ORD", "SAN", "SFO", "SIN", "TLV", "BUD" };
+
+routes =
+ {
+ {"DSM", "ORD"}, {"ORD", "BGI"}, {"BGI", "LGA"}, {"SIN", "CDG"},
+ {"CDG", "SIN"}, {"CDG", "BUD"}, {"DEL", "DOH"}, {"DEL", "CDG"}, {"TLV", "DEL"},
+ {"EWR", "HND"}, {"HND", "ICN"}, {"HND", "JFK"}, {"ICN", "JFK"}, {"JFK", "LGA"},
+ {"EYW", "LHR"}, {"LHR", "SFO"}, {"SFO", "SAN"}, {"SFO", "DSM"}, {"SAN", "EYW"}
+ };
+ 
+ startingAirport = "LGA";
+
+ Find out how many routes you will need to create to ensure you can travel all airports.
+ Answer: 3
+
+ The following code will also give what routes they are:
+ Add lines from LGA to [LHR,TLV,EWR].
