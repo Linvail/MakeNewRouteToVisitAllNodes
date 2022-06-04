@@ -71,6 +71,7 @@ void reversedDfs(const string& node, const string& root, const RoutesMapType& gr
     }
 }
 
+//! This function implements the Kosaraju's algorithm. It is not fastest, but it is the simplest.
 unordered_map<string, string> findAllSsc(const RoutesMapType& graph, const RoutesMapType& reversedGraph, const unordered_set<string>& nodes)
 {
     // Helper to detect if a node has been visited during DFS.
@@ -108,23 +109,23 @@ vector<string> makeNewRoutes(const vector<string>& airports, const vector<RouteT
     for (const auto& edge : routes)
     {
         graph[edge.first].insert(edge.second);
-        // Some airports may has 0 outbound, we still need to create it in the graph.
+        // Some airports may have 0 outbound, but we still need to create it in the graph.
+        // Note that emplace() won't take place if the key already exists.
         graph.emplace(edge.second, unordered_set<string>());
         reversedGraph[edge.second].insert(edge.first);
-        // Some airports may has 0 inbound, we still need to create it in the reversedGraph.
+        // Some airports may have 0 inbound, but we still need to create it in the reversedGraph.
         reversedGraph.emplace(edge.first, unordered_set<string>());
         nodes.insert(edge.first);
         nodes.insert(edge.second);
     }
 
-    // This components stores the component's represent node's name of every node.
-    // For example, ("CDG", "CDG"), ("SIN", "CDG"), means SIN and CDG belong
-    // to the same component - CDG.
+    // This components stores the component's representative node's name of every node.
+    // For example, ("CDG", "CDG"), ("SIN", "CDG") means SIN and CDG belong to the same component - CDG.
     unordered_map<string, string> components = findAllSsc(graph, reversedGraph, nodes);
 
     // If a SSC's in-degree is 0, we are unable to reach it.
     // That means we need to a line to connect to it.
-    // Scan edges and establish the connection relationship between SSC.
+    // Scan edges and construct the graph of SSCs.
     unordered_map<string, int> inDegreeSsc;
     for (const auto& edge : routes)
     {
@@ -136,7 +137,6 @@ vector<string> makeNewRoutes(const vector<string>& airports, const vector<RouteT
         {
             inDegreeSsc[sscOfdest]++;
         }
-        // emplace() won't take place if the key already exists.
         // Ensure every SSC would exist in the inDegreeSsc.
         inDegreeSsc.emplace(sscOfStart, 0);
     }
@@ -155,7 +155,7 @@ vector<string> makeNewRoutes(const vector<string>& airports, const vector<RouteT
 }
 
 
-//! Print a vector (1D array)
+//! Helper function to print a vector (1D array)
 template<typename T>
 void PrintVector
 	(
